@@ -34,13 +34,13 @@ app.get('/now', (req, _, next) => {
     req.time = new Date().toString();
 
     next();
-}, (req, res) => res.json({ time: req.time}));
+}, (req, res) => res.json({time: req.time}));
 
 app.get('/:word/echo', (req, _, next) => {
     req.word = req.params.word;
 
     next();
-}, (req, res) => res.json({ echo: req.word}));
+}, (req, res) => res.json({echo: req.word}));
 
 app.route('/name')
     .get((req, res) => {
