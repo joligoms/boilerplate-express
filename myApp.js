@@ -1,9 +1,8 @@
 require('dotenv').config()
+const bodyParser = require('body-parser');
 
 let express = require('express');
 let app = express();
-
-app.use('/public', express.static(`${__dirname}/public`));
 
 function logger(req, _, next) {
     const { method, path, ip } = req;
@@ -12,6 +11,8 @@ function logger(req, _, next) {
     next();
 }
 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use('/public', express.static(`${__dirname}/public`));
 app.use(logger);
 
 
