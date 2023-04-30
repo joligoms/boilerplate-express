@@ -43,13 +43,21 @@ app.get('/:word/echo', (req, _, next) => {
     next();
 }, (req, res) => res.json({echo: req.word}));
 
-app.route('/name')
-    .get((req, res) => {
-        const { first, last } = req.query;
 
-        res.json({
-            name: `${first} ${last}`
-        });
-    })
+const nameMiddleware = (req, res) => res.json({name: `${req.first} ${req.last}`});
+
+app.route('/name')
+    .get((req, _, next) => {
+        req.first = req.query.first;
+        req.last = req.query.last;
+
+        next();
+    }, nameMiddleware)
+    .post((req, _, next) => {
+        req.first = req.body.first;
+        req.last = req.body.last;
+
+        next();
+    }, nameMiddleware);
 
  module.exports = app;
